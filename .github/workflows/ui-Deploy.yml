@@ -45,6 +45,14 @@ jobs:
           build-args: |
             APP_VERSION=${{ steps.build_info.outputs.short_sha }}
             BUILD_DATE=${{ steps.build_info.outputs.date }}
+            
+      - name: Verify Built Image Contents
+        run: |
+          IMAGE_NAME=$(echo "ghcr.io/${{ github.repository }}-api:latest" | tr '[:upper:]' '[:lower:]')
+          echo "=== File structure of compiled app ==="
+          docker run --rm $IMAGE_NAME ls -la /usr/share/nginx/html
+          echo "=== Checking if local-dev is still in the compiled JS files ==="
+          docker run --rm $IMAGE_NAME sh -c 'grep -Hrn "local-dev" /usr/share/nginx/html/ || echo "Success! local-dev was fully replaced."'
 
   deploy:
     needs: build-and-push
