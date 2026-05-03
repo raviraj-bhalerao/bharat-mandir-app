@@ -13,7 +13,8 @@ ARG BUILD_DATE="local-dev"
 
 # Overwrite environment file with actual build values
 RUN mkdir -p src/app && \
-    echo "export const environment = { version: '${APP_VERSION}', buildDate: '${BUILD_DATE}' };" > src/app/environment.ts
+    echo "export const environment = { version: '${APP_VERSION}', buildDate: '${BUILD_DATE}' };" > src/app/environment.ts && \
+    find src -name "environment*.ts" -exec cp src/app/environment.ts {} \;
 
 # Clean Angular cache to ensure it reads the newly generated environment.ts
 RUN rm -rf .angular && npm run build
