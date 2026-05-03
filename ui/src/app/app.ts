@@ -5,12 +5,12 @@ import { RouterOutlet } from '@angular/router';
   selector: 'app-root',
   imports: [RouterOutlet],
   template: `
-    <h1>Hello, {{ title() }}</h1>
+    <h1>Hello there, {{ title() }}</h1>
 
     <router-outlet />
   `,
   styles: [],
 })
 export class App {
-  protected readonly title = signal('ui');
+  protected readonly title = signal('Mandir App UI');
 }
