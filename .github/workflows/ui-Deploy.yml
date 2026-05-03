@@ -25,8 +25,10 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ghcr.io/${{ github.repository }}-api
-          tags: type=raw,value=latest
+          images: ghcr.io/${{ github.repository }}-ui
+          tags: |
+            type=raw,value=latest
+            type=raw,value=${{ github.sha }}
 
       - name: Extract Build Info
         id: build_info
@@ -101,4 +103,6 @@ jobs:
     #         -d @env_vars.json
 
       - name: Trigger Render Deployment
-        run: curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK }}
+        run: |
+          IMAGE_URL=$(echo "ghcr.io/${{ github.repository }}-api:${{ github.sha }}" | tr '[:upper:]' '[:lower:]')
+          curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK }}&imgURL=$IMAGE_URL"
