@@ -50,7 +50,7 @@ jobs:
             
       - name: Verify Built Image Contents
         run: |
-          IMAGE_NAME=$(echo "ghcr.io/${{ github.repository }}-api:latest" | tr '[:upper:]' '[:lower:]')
+          IMAGE_NAME=$(echo "ghcr.io/${{ github.repository }}-ui:latest" | tr '[:upper:]' '[:lower:]')
           echo "=== File structure of compiled app ==="
           docker run --rm $IMAGE_NAME ls -la /usr/share/nginx/html
           echo "=== Checking if local-dev is still in the compiled JS files ==="
@@ -104,5 +104,5 @@ jobs:
 
       - name: Trigger Render Deployment
         run: |
-          IMAGE_URL=$(echo "ghcr.io/${{ github.repository }}-api:${{ github.sha }}" | tr '[:upper:]' '[:lower:]')
+          IMAGE_URL=$(echo "ghcr.io/${{ github.repository }}-ui:${{ github.sha }}" | tr '[:upper:]' '[:lower:]')
           curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK }}&imgURL=$IMAGE_URL"
