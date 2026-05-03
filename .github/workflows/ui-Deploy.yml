@@ -28,6 +28,12 @@ jobs:
           images: ghcr.io/${{ github.repository }}-api
           tags: type=raw,value=latest
 
+      - name: Extract Build Info
+        id: build_info
+        run: |
+          echo "short_sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+          echo "date=$(date -u +'%Y-%m-%d %H:%M:%S UTC')" >> $GITHUB_OUTPUT
+
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
@@ -36,6 +42,9 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            APP_VERSION=${{ steps.build_info.outputs.short_sha }}
+            BUILD_DATE=${{ steps.build_info.outputs.date }}
 
   deploy:
     needs: build-and-push
