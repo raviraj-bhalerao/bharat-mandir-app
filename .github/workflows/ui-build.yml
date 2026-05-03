@@ -3,10 +3,10 @@ name: UI Build
 on:
   push:
     paths:
-      - 'UI/**'
+      - 'ui/**'
   pull_request:
     paths:
-      - 'UI/**'
+      - 'ui/**'
 
 jobs:
   build:
