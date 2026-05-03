@@ -2,19 +2,24 @@ name: UI Build
 
 on:
   push:
+    branches:
+      - main
     paths:
       - 'ui/**'
+      - '!*.md'
   pull_request:
+    branches:
+      - main
     paths:
       - 'ui/**'
-
+      
 jobs:
   build:
     runs-on: ubuntu-latest
 
     defaults:
       run:
-        working-directory: UI
+        working-directory: ui
 
     steps:
       - name: Checkout code
