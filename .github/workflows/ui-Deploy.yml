@@ -1,4 +1,4 @@
-name: Samwin UmlautConverter Api Deploy Container Image
+name: Ui Deploy Container Image
 
 on:
   workflow_dispatch: # allows manual trigger or API dispatch
@@ -32,7 +32,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: ./ui
-          file: ./ui/dockerfile
+          file: ./ui/Dockerfile
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
