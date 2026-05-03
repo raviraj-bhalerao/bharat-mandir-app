@@ -15,7 +15,8 @@ ARG BUILD_DATE="local-dev"
 RUN mkdir -p src/app && \
     echo "export const environment = { version: '${APP_VERSION}', buildDate: '${BUILD_DATE}' };" > src/app/environment.ts
 
-RUN npm run build
+# Clean Angular cache to ensure it reads the newly generated environment.ts
+RUN rm -rf .angular && npm run build
 
 # Step 2: serve using nginx
 FROM nginx:alpine
