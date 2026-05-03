@@ -13,7 +13,9 @@ on:
       - main
     paths:
       - 'ui/**'
-      
+permissions:
+  contents: write
+  
 jobs:
   build:
     runs-on: ubuntu-latest
